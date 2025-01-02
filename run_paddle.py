@@ -1,13 +1,23 @@
 import cv2
-import fitz
 import numpy as np
+import pymupdf
 from paddleocr import PaddleOCR, draw_ocr
 from PIL import Image
 
+# ocr = PaddleOCR(
+#     cls_model_dir="./models/ch_ppocr_mobile_v2.0_cls_infer/",
+#     det_model_dir="./models/en_PP-OCRv3_det_infer/",
+#     rec_model_dir="./models/en_PP-OCRv3_rec_infer/",
+#     use_angle_cls=True,
+#     use_gpu=True,
+#     use_onnx=False,
+#     lang="fr",
+# )
+
 ocr = PaddleOCR(
-    cls_model_dir="./models/ch_ppocr_mobile_v2.0_cls_infer/",
-    det_model_dir="./models/en_PP-OCRv3_det_infer/",
-    rec_model_dir="./models/en_PP-OCRv3_rec_infer/",
+    cls_model_dir="../models/ch_ppocr_mobile_v2.0_cls_infer",
+    det_model_dir="../models/ch_PP-OCRv3_det_slim_infer",
+    rec_model_dir="../models/ch_PP-OCRv3_rec_slim_infer",
     use_angle_cls=True,
     use_gpu=True,
     use_onnx=False,
@@ -16,7 +26,15 @@ ocr = PaddleOCR(
 
 # https://github.com/PaddlePaddle/PaddleOCR/blob/release/2.6/paddleocr.py
 
-img_path = "data/release_document_signed.pdf"
+pdf_path = "data/test_pdf.pdf"
+pdf = pymupdf.open(pdf_path)
+for page in pdf:
+    mat = pymupdf.Matrix(2, 2)
+    pm = page.get_pixmap(matrix=mat, alpha=False)
+
+# Load pdf
+
+
 result = ocr.ocr(img_path, cls=True)
 for idx in range(len(result)):
     res = result[idx]

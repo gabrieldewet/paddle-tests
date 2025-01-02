@@ -9,6 +9,7 @@ dependencies = [
     "paddleocr>=2.9.1",
     "paddlepaddle>=2.6.2",
     "pymupdf>=1.25.1",
+    "onnx==1.17.0",
 ]
 
 # In some cases, you may want to use CPU-only builds in some cases, 
@@ -50,4 +51,4 @@ indent-width = 4
 ignore = ["F401", "F841"]
 
 [dependency-groups]
-dev = ["ipykernel>=6.29.5", "ipywidgets>=8.1.5"]
+dev = ["ipykernel>=6.29.5", "ipywidgets>=8.1.5", "paddleocr-convert>=0.0.19"]
