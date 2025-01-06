@@ -6,9 +6,9 @@ from PIL import Image
 from rapidocr_onnxruntime import RapidOCR
 
 model = RapidOCR(
-    # cls_model_path="./models/cls_onnx/model.onnx",
-    # det_model_path="./models/det_onnx/model.onnx",
-    # rec_model_path="./models/rec_onnx/model.onnx",
+    cls_model_path="./models/cls_onnx/model.onnx",
+    det_model_path="./models/det_onnx/model.onnx",
+    rec_model_path="./models/rec_onnx/model.onnx",
 )
 
 

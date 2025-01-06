@@ -14,6 +14,7 @@ dependencies = [
     "matplotlib>=3.10.0",
     "seaborn>=0.13.2",
     "rapidocr-onnxruntime>=1.4.3",
+    "typer>=0.15.1",
 ]
 
 # In some cases, you may want to use CPU-only builds in some cases, 
