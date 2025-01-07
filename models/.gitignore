@@ -1,2 +1,6 @@
-*
-!.gitignore
+/ch_ppocr_mobile_v2.0_cls_infer
+/cls_onnx
+/det_onnx
+/en_PP-OCRv3_det_infer
+/en_PP-OCRv3_rec_infer
+/rec_onnx
