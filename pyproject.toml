@@ -15,6 +15,7 @@ dependencies = [
     "seaborn>=0.13.2",
     "rapidocr-onnxruntime>=1.4.3",
     "typer>=0.15.1",
+    "dvc>=3.58.0",
 ]
 
 # In some cases, you may want to use CPU-only builds in some cases, 
