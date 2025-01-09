@@ -4,7 +4,9 @@ import pymupdf
 import typer
 
 
-def main(engine: str = "paddle"):
+def main(engine: str):
+    print(f"Using {engine=}")
+    assert engine in ["paddle", "rapid", "onnx"], "Invalid engine"
     if engine == "paddle":
         from src.paddle_ocr import ocr_pdf
     elif engine == "rapid":
