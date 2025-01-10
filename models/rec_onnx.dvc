@@ -1,6 +1,0 @@
-outs:
-- md5: 54cc8b82a406f666eed05bce90011c22.dir
-  size: 8977705
-  nfiles: 1
-  hash: md5
-  path: rec_onnx

@@ -1,6 +1,0 @@
-outs:
-- md5: c9adba7ec95399e1108d72692b5c3c6e.dir
-  size: 2421707
-  nfiles: 1
-  hash: md5
-  path: det_onnx

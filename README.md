@@ -4,12 +4,27 @@ The goal of this repo is explore the potential of PaddleOCR models with ONNX Run
 
 ## Setup
 
-For paddlepaddle on mac:
+#### [on Mac] For paddlepaddle:
 
-`uv pip install paddlepaddle==0.0.0 -f https://www.paddlepaddle.org.cn/whl/mac/cpu/develop.html`
+```bash
+uv pip install paddlepaddle==0.0.0 -f https://www.paddlepaddle.org.cn/whl/mac/cpu/develop.html
+```
+
+#### Download Paddle Models
+
+```bash
+source scripts/download_models.sh
+```
+
+#### Convert Paddle Models to ONNX
+
+```bash
+source scripts/convert_models.sh
+```
 
 ## Models
 [Model List](https://github.com/PaddlePaddle/PaddleOCR/blob/release/2.6/doc/doc_en/models_list_en.md)
+
 ### Detection Model
 - [ml_PP-OCRv3_det](https://paddleocr.bj.bcebos.com/PP-OCRv3/multilingual/Multilingual_PP-OCRv3_det_infer.tar)
 - [ch_PP-OCRv3_det](https://paddleocr.bj.bcebos.com/PP-OCRv3/chinese/ch_PP-OCRv3_det_slim_infer.tar)

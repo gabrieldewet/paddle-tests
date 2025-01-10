@@ -1,0 +1,6 @@
+outs:
+- md5: ff6096b9b18b1fd65f67cd1a1d1ea0f5.dir
+  size: 9021587
+  nfiles: 8
+  hash: md5
+  path: rapid_onnx
