@@ -1,6 +1,0 @@
-outs:
-- md5: 80c274598ce462f4c42d579a4ca0aa92.dir
-  size: 571423
-  nfiles: 1
-  hash: md5
-  path: cls_onnx

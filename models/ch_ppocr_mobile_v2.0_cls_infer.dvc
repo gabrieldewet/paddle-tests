@@ -1,6 +1,0 @@
-outs:
-- md5: 77edef725e200460d1b7ce8c90dc9c11.dir
-  size: 2183010
-  nfiles: 3
-  hash: md5
-  path: ch_ppocr_mobile_v2.0_cls_infer

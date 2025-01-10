@@ -1,6 +1,0 @@
-outs:
-- md5: 6483781c7ca26c5b61368d7b6d4b9508.dir
-  size: 10164059
-  nfiles: 3
-  hash: md5
-  path: en_PP-OCRv3_rec_infer
