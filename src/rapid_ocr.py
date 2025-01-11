@@ -5,14 +5,14 @@ import pymupdf
 from PIL import Image
 from rapidocr_onnxruntime import RapidOCR
 
-model = RapidOCR(
-    cls_model_path="./models/cls_onnx/model.onnx",
-    det_model_path="./models/det_onnx/model.onnx",
-    rec_model_path="./models/rec_onnx/model.onnx",
+ocr = RapidOCR(
+    cls_model_path="./models/rapid_onnx/ch_ppocr_mobile_v2.0_cls_infer/ch_ppocr_mobile_v2.0_cls_infer.onnx",
+    det_model_path="./models/rapid_onnx/Multilingual_PP-OCRv3_det_infer/Multilingual_PP-OCRv3_det_infer.onnx",
+    rec_model_path="./models/rapid_onnx/latin_PP-OCRv3_rec_infer/latin_PP-OCRv3_rec_infer.onnx",
 )
 
 
-def ocr_pdf(page, model=model):
+def ocr_pdf(page: pymupdf.Page, model: RapidOCR = ocr):
     mat = pymupdf.Matrix(2, 2)
     pm = page.get_pixmap(matrix=mat, alpha=False)
     img = Image.frombytes("RGB", [pm.width, pm.height], pm.samples)
