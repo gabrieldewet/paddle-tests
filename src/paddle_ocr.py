@@ -9,9 +9,9 @@ logger = logging.getLogger("ppocr")
 logger.setLevel(logging.INFO)
 
 ocr = PaddleOCR(
-    cls_model_dir="./models/ch_ppocr_mobile_v2.0_cls_infer/",
-    det_model_dir="./models/en_PP-OCRv3_det_infer/",
-    rec_model_dir="./models/en_PP-OCRv3_rec_infer/",
+    cls_model_dir="./models/paddle/ch_ppocr_mobile_v2.0_cls_infer/",
+    det_model_dir="./models/paddle/Multilingual_PP-OCRv3_det_infer/",
+    rec_model_dir="./models/paddle/latin_PP-OCRv3_rec_infer/",
     use_angle_cls=True,
     use_gpu=True,
     use_onnx=False,
@@ -19,7 +19,7 @@ ocr = PaddleOCR(
 )
 
 
-def ocr_pdf(page, model=ocr):
+def ocr_pdf(page: pymupdf.Page, model: PaddleOCR = ocr):
     mat = pymupdf.Matrix(2, 2)
     pm = page.get_pixmap(matrix=mat, alpha=False)
     img = Image.frombytes("RGB", [pm.width, pm.height], pm.samples)
