@@ -17,7 +17,7 @@ def ocr_pdf(page: pymupdf.Page, model: RapidOCR = ocr):
     pm = page.get_pixmap(matrix=mat, alpha=False)
     img = Image.frombytes("RGB", [pm.width, pm.height], pm.samples)
 
-    return model(np.array(img))
+    return model(np.array(img))[0]
 
 
 if __name__ == "__main__":
