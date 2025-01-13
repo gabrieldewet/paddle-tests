@@ -38,7 +38,10 @@ source scripts/convert_models.sh
 
 ## Results
 ### Memory Usage
+#### Mac M1
 - Memory Usage psutil 
-![Memory Usage psutil](./metrics/memory_usage_all_models_psutil.png)
+![Memory Usage psutil](./metrics/mac/memory_usage_all_models_psutil.png)
 - Memory Usage tracemalloc
-![Memory Usage tracemalloc](./metrics/memory_usage_all_models_tracemalloc.png)
+![Memory Usage tracemalloc](./metrics/mac/memory_usage_all_models_tracemalloc.png)
+- Overall memory and inference speed
+![Memory Usage tracemalloc](./metrics/mac/memory_usage_all.png)
