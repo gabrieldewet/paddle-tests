@@ -5,6 +5,8 @@ import pymupdf
 from paddleocr import PaddleOCR
 from PIL import Image
 
+from src.settings import N_CPU, USE_GPU
+
 logger = logging.getLogger("ppocr")
 logger.setLevel(logging.INFO)
 
@@ -12,10 +14,12 @@ ocr = PaddleOCR(
     cls_model_dir="./models/paddle_onnx/ch_ppocr_mobile_v2.0_cls_infer.onnx",
     det_model_dir="./models/paddle_onnx/Multilingual_PP-OCRv3_det_infer.onnx",
     rec_model_dir="./models/paddle_onnx/latin_PP-OCRv3_rec_infer.onnx",
-    use_angle_cls=True,
-    use_gpu=True,
+    use_angle_cls=False,
+    use_gpu=False,
     use_onnx=True,
     lang="fr",
+    use_mp=N_CPU != 1,
+    total_process_num=N_CPU,
 )
 
 

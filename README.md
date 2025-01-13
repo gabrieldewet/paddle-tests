@@ -39,9 +39,13 @@ source scripts/convert_models.sh
 ## Results
 ### Memory Usage
 #### Mac M1
-- Memory Usage psutil 
-![Memory Usage psutil](./metrics/mac/memory_usage_all_models_psutil.png)
-- Memory Usage tracemalloc
-![Memory Usage tracemalloc](./metrics/mac/memory_usage_all_models_tracemalloc.png)
-- Overall memory and inference speed
-![Memory Usage tracemalloc](./metrics/mac/memory_usage_all.png)
+| ![Memory Usage psutil](./metrics/cpu/memory_usage_all_models_1_cpu.png) | ![Memory Usage tracemalloc](./metrics/cpu/memory_usage_all_1_cpu.png) |
+| ----------------------------------------------------------------------- | --------------------------------------------------------------------- |
+
+#### CPU (n_cpu=1 ...not tue paddleocr config doesn't quite work as intended)
+| ![Memory Usage psutil](./metrics/cpu/memory_usage_all_models_1_cpu.png) | ![Memory Usage tracemalloc](./metrics/cpu/memory_usage_all_1_cpu.png) |
+| ----------------------------------------------------------------------- | --------------------------------------------------------------------- |
+
+#### CPU (n_cpu=12)
+| ![Memory Usage psutil](./metrics/cpu/memory_usage_all_models_1_cpu.png) | ![Memory Usage tracemalloc](./metrics/cpu/memory_usage_all_12_cpu.png) |
+| ----------------------------------------------------------------------- | ---------------------------------------------------------------------- |

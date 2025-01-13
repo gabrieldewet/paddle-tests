@@ -1,20 +1,10 @@
 import os
-import platform
-import tracemalloc
 
 import matplotlib.pyplot as plt
 import psutil
 import seaborn as sns
-import torch
 
-
-def get_system():
-    if platform.system() == "Darwin":
-        return "mac"
-    if torch.cuda.is_available():
-        return "gpu"
-    else:
-        return "cpu"
+from src.settings import N_CPU, PLATFORM
 
 
 # Function to run heavy computation
@@ -24,43 +14,36 @@ def dummy_computation(dummy_input=None):
     return a + b
 
 
-def log_memory(base_memory_psutil, base_memory_tracemalloc):
+def log_memory(base_memory):
     process = psutil.Process(os.getpid())
     mem_psutil = process.memory_info().rss / (1024 * 1024)  # in MB
 
-    # Log the memory allocated by Python objects using tracemalloc
-    mem_tracmalloc = tracemalloc.get_traced_memory()[0] / (1024 * 1024)
     return (
-        round(mem_psutil - base_memory_psutil, 3),
-        round(mem_tracmalloc - base_memory_tracemalloc, 3),
+        round(mem_psutil - base_memory, 3),
         round(mem_psutil, 3),
     )
 
 
-def plot_memory_usage(memory_df, mode="psutil"):
+def plot_memory_usage(memory_df):
     # Plot memory usage for all backends in subplots
     sns.set_theme(style="whitegrid")
-    plt.figure(figsize=(10, 6))
+    plt.figure(figsize=(16, 9))
 
     # Create a plot for each backend
     for backend in memory_df["backend"].unique():
         subset = memory_df[memory_df["backend"] == backend]
-        if mode == "psutil":
-            sns.lineplot(x="page", y="memory_usage_psutil", data=subset, marker="o", label=backend)
-        elif mode == "tracemalloc":
-            sns.lineplot(x="page", y="memory_usage_tracemalloc", data=subset, marker="o", label=backend)
+        sns.lineplot(x="page", y="memory_usage", data=subset, marker="o", label=backend)
 
-    plt.title(f"Memory Usage for All Models ({mode})", fontsize=16)
+    plt.title("Memory usage for all models)", fontsize=16)
     plt.xlabel("Page Number", fontsize=12)
     plt.ylabel("Memory Usage (MB)", fontsize=12)
     plt.legend(title="Backend", bbox_to_anchor=(1.05, 1), loc="upper left")
     plt.tight_layout()
-    plt.savefig(f"./metrics/{get_system()}/memory_usage_all_models_{mode}.png")
-    # plt.show()
+    plt.savefig(f"./metrics/{PLATFORM}/memory_usage_all_models_{N_CPU}_cpu.png")
 
 
 def plot_memory_usage_all(memory_df):
-    fig, ax1 = plt.subplots(figsize=(16, 8))
+    fig, ax1 = plt.subplots(figsize=(16, 9))
 
     # Left axis: Cumulative memory usage
     ax1.set_ylabel("Cumulative Memory Usage (MB)", fontsize=14, color="tab:blue")
@@ -72,7 +55,7 @@ def plot_memory_usage_all(memory_df):
     ax2 = ax1.twinx()
     ax2.set_ylabel("Inference Time (seconds)", fontsize=14, color="tab:orange")
 
-    ax2.set_ylim(0, memory_df["processing_time"].max() * 1.3)  # Set max limit for better visual scaling
+    ax2.set_ylim(0, memory_df["processing_time"].max() * 1.25)  # Set max limit for better visual scaling
     ax2.tick_params(axis="y", labelcolor="tab:orange")
 
     boundaries = []
@@ -110,12 +93,11 @@ def plot_memory_usage_all(memory_df):
     ax2.legend(loc="upper right")
 
     plt.tight_layout()
-    plt.savefig(f"./metrics/{get_system()}/memory_usage_all.png")
+    plt.savefig(f"./metrics/{PLATFORM}/memory_usage_all_{N_CPU}_cpu.png")
 
 
 def make_plots(memory_df):
-    plot_memory_usage(memory_df, "psutil")
-    plot_memory_usage(memory_df, "tracemalloc")
+    plot_memory_usage(memory_df)
     plot_memory_usage_all(memory_df)
 
 
