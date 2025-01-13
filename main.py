@@ -1,15 +1,17 @@
+import os
 import tracemalloc
 
+import pandas as pd
+import psutil
 import pymupdf
 import typer
 
-from src.utils import dummy_computation, get_backend_engine, log_memory, plot_memory_usage
+from src.utils import dummy_computation, get_backend_engine, log_memory, make_plots
 
 BACKENDS = [
-    "paddle",
     "rapid",
+    "paddle",
     "onnx",
-    "dummy",
 ]
 
 
@@ -23,30 +25,51 @@ def main(mode: str):
     pdf = pymupdf.open(pdf_path)
 
     if mode == "memtest":
-        psutil_memory_log = []
-        tracemalloc_memory_log = []
+        memory_df = pd.DataFrame(columns=["backend", "page", "memory_usage_psutil", "memory_usage_tracemalloc"])
 
         for backend in BACKENDS:
             print(f"Testing {backend=}...")
             tracemalloc.start()
 
-            for page in pdf:
-                log_memory(psutil_memory_log, tracemalloc_memory_log)
-                result = dummy_computation(page)
-                # result = ocr_page(page, backend)
-                log_memory(psutil_memory_log, tracemalloc_memory_log)
-                print(f"Page {page.number}: {len(result)}...")
+            base_memory_psutil = psutil.Process(os.getpid()).memory_info().rss / (1024 * 1024)
+            base_memory_tracemalloc = tracemalloc.get_traced_memory()[0] / (1024 * 1024)
+
+            for i, pdf_ in enumerate([pdf, pdf, pdf]):
+                for page in pdf:
+                    page_num = page.number + i * len(pdf)
+                    # result = dummy_computation(page)
+                    result = ocr_page(page, backend)
+                    memory_usage = log_memory(base_memory_psutil, base_memory_tracemalloc)
+                    memory_df = pd.concat(
+                        [
+                            memory_df,
+                            pd.DataFrame(
+                                {
+                                    "backend": backend,
+                                    "page": page_num,
+                                    "memory_usage_psutil": memory_usage[0],
+                                    "memory_usage_tracemalloc": memory_usage[1],
+                                },
+                                index=[0],
+                            ),
+                        ],
+                        ignore_index=True,
+                    )
+                    if page_num % 7 == 0:
+                        print(f"Page {page_num}: {len(result)=} | {memory_usage[0]=} MB | {memory_usage[1]=} MB")
 
             tracemalloc.stop()
+        # print(memory_df)
+        make_plots(memory_df)
 
     else:
         backend = mode
         print(f"Using {backend=}")
-        assert backend in BACKENDS, "Invalid back end - Chose one of 'paddle', 'rapid', 'onnx', 'dummy'"
+        assert backend in BACKENDS + ["dummy"], "Invalid back end - Chose one of 'paddle', 'rapid', 'onnx', 'dummy'"
 
         for page in pdf:
             result = ocr_page(page, backend)
-            print(result)
+            print(result[0])
             break
 
 

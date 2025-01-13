@@ -13,38 +13,40 @@ def dummy_computation(dummy_input=None):
     return a + b
 
 
-def log_memory_usage_psutil(memory_log):
-    # Log the current memory usage in MB using psutil
+def log_memory(base_memory_psutil, base_memory_tracemalloc):
     process = psutil.Process(os.getpid())
-    memory_usage = process.memory_info().rss / (1024 * 1024)  # in MB
-    memory_log.append(memory_usage)
+    mem_psutil = process.memory_info().rss / (1024 * 1024)  # in MB
 
-
-def log_memory_usage_tracemalloc(memory_log):
     # Log the memory allocated by Python objects using tracemalloc
-    current, peak = tracemalloc.get_traced_memory()
-    memory_log.append(current / (1024 * 1024))  # Convert to MB
+    mem_tracmalloc = tracemalloc.get_traced_memory()[0] / (1024 * 1024)
+    return mem_psutil - base_memory_psutil, mem_tracmalloc - base_memory_tracemalloc
 
 
-def log_memory(psutil_memory_log, tracemalloc_memory_log):
-    log_memory_usage_psutil(psutil_memory_log)
-    log_memory_usage_tracemalloc(tracemalloc_memory_log)
-
-
-def plot_memory_usage(memory_logs, backends, mode="psutil"):
+def plot_memory_usage(memory_df, mode="psutil"):
     # Plot memory usage for all backends in subplots
     sns.set_theme(style="whitegrid")
-    fig, axes = plt.subplots(len(backends), 1, figsize=(10, len(backends) * 6), sharex=True)
+    plt.figure(figsize=(10, 6))
 
-    for ax, (backend, memory_log) in zip(axes, zip(backends, memory_logs)):
-        sns.lineplot(x=range(len(memory_log)), y=memory_log, marker="o", ax=ax)
-        ax.set_title(f"Memory Usage for {backend} ({mode})", fontsize=16)
-        ax.set_xlabel("Page Number", fontsize=12)
-        ax.set_ylabel("Memory Usage (MB)", fontsize=12)
+    # Create a plot for each backend
+    for backend in memory_df["backend"].unique():
+        subset = memory_df[memory_df["backend"] == backend]
+        if mode == "psutil":
+            sns.lineplot(x="page", y="memory_usage_psutil", data=subset, marker="o", label=backend)
+        elif mode == "tracemalloc":
+            sns.lineplot(x="page", y="memory_usage_tracemalloc", data=subset, marker="o", label=backend)
 
+    plt.title(f"Memory Usage for All Models ({mode})", fontsize=16)
+    plt.xlabel("Page Number", fontsize=12)
+    plt.ylabel("Memory Usage (MB)", fontsize=12)
+    plt.legend(title="Backend", bbox_to_anchor=(1.05, 1), loc="upper left")
     plt.tight_layout()
-    plt.savefig(f"memory_usage_all_models_{mode}.png")
-    plt.show()
+    plt.savefig(f"./metrics/memory_usage_all_models_{mode}.png")
+    # plt.show()
+
+
+def make_plots(memory_df):
+    plot_memory_usage(memory_df, "psutil")
+    plot_memory_usage(memory_df, "tracemalloc")
 
 
 def get_backend_engine(backend: str):
