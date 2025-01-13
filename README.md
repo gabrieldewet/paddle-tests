@@ -35,3 +35,10 @@ source scripts/convert_models.sh
 
 ### Angle Classification Model
 - [ch_ppocr_mobile_v2.0_cls](https://paddleocr.bj.bcebos.com/dygraph_v2.0/ch/ch_ppocr_mobile_v2.0_cls_infer.tar)
+
+## Results
+### Memory Usage
+- Memory Usage psutil 
+![Memory Usage psutil](./metrics/memory_usage_all_models_psutil.png)
+- Memory Usage tracemalloc
+![Memory Usage tracemalloc](./metrics/memory_usage_all_models_tracemalloc.png)
