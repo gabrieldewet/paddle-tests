@@ -39,13 +39,13 @@ source scripts/convert_models.sh
 ## Results
 ### Memory Usage
 #### Mac M1
-| ![Memory Usage psutil](./metrics/cpu/memory_usage_all_models_1_cpu.png) | ![Memory Usage tracemalloc](./metrics/cpu/memory_usage_all_1_cpu.png) |
+| ![Memory Usage](./metrics/mac/memory_usage_all_models_.png) | ![Inference Time](./metrics/mac/memory_usage_all_.png) |
 | ----------------------------------------------------------------------- | --------------------------------------------------------------------- |
 
-#### CPU (n_cpu=1 ...not tue paddleocr config doesn't quite work as intended)
-| ![Memory Usage psutil](./metrics/cpu/memory_usage_all_models_1_cpu.png) | ![Memory Usage tracemalloc](./metrics/cpu/memory_usage_all_1_cpu.png) |
+#### PaddlePaddle 2.6.2
+| ![Memory Usage](./metrics/cpu/memory_usage_all_models_.png) | ![Inference Time](./metrics/cpu/memory_usage_all_.png) |
 | ----------------------------------------------------------------------- | --------------------------------------------------------------------- |
 
-#### CPU (n_cpu=12)
-| ![Memory Usage psutil](./metrics/cpu/memory_usage_all_models_1_cpu.png) | ![Memory Usage tracemalloc](./metrics/cpu/memory_usage_all_12_cpu.png) |
+#### PaddlePaddle 3.0.0b2
+| ![Memory Usage](./metrics/cpu/memory_usage_all_models_300b2.png) | ![Inference Time](./metrics/cpu/memory_usage_all_300b2.png) |
 | ----------------------------------------------------------------------- | ---------------------------------------------------------------------- |
