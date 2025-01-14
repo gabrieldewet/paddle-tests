@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import psutil
 import seaborn as sns
 
-from src.settings import LABEL, N_CPU, PLATFORM
+from src.settings import LABEL, MULTIPROCESS, PLATFORM
 
 
 # Function to run heavy computation
@@ -39,7 +39,7 @@ def plot_memory_usage(memory_df):
     plt.ylabel("Memory Usage (MB)", fontsize=12)
     plt.legend(title="Backend", bbox_to_anchor=(1.05, 1), loc="upper left")
     plt.tight_layout()
-    plt.savefig(f"./metrics/{PLATFORM}/memory_usage_by_model_{LABEL}.png")
+    plt.savefig(f"./metrics/{PLATFORM}/memory_usage_all_models_{LABEL}.png")
 
 
 def plot_memory_usage_all(memory_df):

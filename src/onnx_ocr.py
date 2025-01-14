@@ -5,7 +5,7 @@ import pymupdf
 from paddleocr import PaddleOCR
 from PIL import Image
 
-from src.settings import N_CPU, USE_GPU
+from src.settings import MULTIPROCESS, USE_GPU
 
 logger = logging.getLogger("ppocr")
 logger.setLevel(logging.INFO)
@@ -18,8 +18,8 @@ ocr = PaddleOCR(
     use_gpu=False,
     use_onnx=True,
     lang="fr",
-    use_mp=N_CPU != 1,
-    total_process_num=N_CPU,
+    use_mp=MULTIPROCESS,
+    total_process_num=-1 if MULTIPROCESS else 1,
 )
 
 

@@ -3,14 +3,14 @@ import pymupdf
 from PIL import Image
 from rapidocr_onnxruntime import RapidOCR
 
-from src.settings import N_CPU, USE_GPU
+from src.settings import MULTIPROCESS, USE_GPU
 
 ocr = RapidOCR(
     cls_model_path="./models/rapid_onnx/ch_ppocr_mobile_v2.0_cls_infer/ch_ppocr_mobile_v2.0_cls_infer.onnx",
     det_model_path="./models/rapid_onnx/Multilingual_PP-OCRv3_det_infer/Multilingual_PP-OCRv3_det_infer.onnx",
     rec_model_path="./models/rapid_onnx/latin_PP-OCRv3_rec_infer/latin_PP-OCRv3_rec_infer.onnx",
-    intra_op_num_threads=N_CPU,
-    inter_op_num_threads=N_CPU,
+    intra_op_num_threads=0 if MULTIPROCESS else 1,
+    inter_op_num_threads=0 if MULTIPROCESS else 1,
     cls_use_cuda=False,
     det_use_cuda=False,
     rec_use_cuda=False,
