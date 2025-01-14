@@ -7,7 +7,7 @@ requires-python = ">=3.12"
 dependencies = [
     "paddle2onnx>=1.3.1",
     "paddleocr>=2.9.1",
-    "paddlepaddle>=2.6.2",
+    "paddlepaddle>=3.0.0b2",
     "pymupdf>=1.25.1",
     "onnx==1.17.0",
     "pandas>=2.2.3",

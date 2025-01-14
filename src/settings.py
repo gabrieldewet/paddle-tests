@@ -2,6 +2,7 @@ import platform
 
 import torch
 
+LABEL = "paddle_300b2"
 N_CPU = 12
 USE_GPU = False
 

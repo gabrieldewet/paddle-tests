@@ -6,7 +6,7 @@ import psutil
 import pymupdf
 import typer
 
-from src.settings import N_CPU, PLATFORM
+from src.settings import LABEL, PLATFORM
 from src.utils import get_backend_engine, log_memory, make_plots
 
 BACKENDS = [
@@ -65,7 +65,7 @@ def main(mode: str):
                         print(
                             f"Page {page_num:3}: Memory= {memory_usage[0]:5.2f} MB | Cumulative memory= {memory_usage[1]:5.2f} MB | Processing time={processing_time:5.2f} s"
                         )
-        memory_df.to_csv(f"metrics/{PLATFORM}/memory_usage_{N_CPU}_cpu.csv", index=False)
+        memory_df.to_csv(f"metrics/{PLATFORM}/memory_usage_{LABEL}.csv", index=False)
         make_plots(memory_df)
 
     else:
